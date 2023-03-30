@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 
 export default function Header() {
+  const [ariaExp, setAriaExp] = useState(true);
+  const [btnToggle, setBtnToggle] = useState("navbar-toggler collapsed");
+  const [btnCollapse, setBtnCollapse] = useState(
+    "navbar-collapse collapse justify-content-center"
+  );
+
+  const toggle = () => {
+    setAriaExp(!ariaExp);
+    setBtnToggle((prevBtnToggle) =>
+      prevBtnToggle === "navbar-toggler collapsed"
+        ? "navbar-toggler"
+        : "navbar-toggler collapsed"
+    );
+    setBtnCollapse((preBtnCollapse) =>
+      preBtnCollapse === "navbar-collapse collapse justify-content-center"
+        ? "navbar-collapse collapse justify-content-center show"
+        : "navbar-collapse collapse justify-content-center"
+    );
+  };
   return (
     <div>
       <div className="click-closed"></div>
@@ -10,13 +29,13 @@ export default function Header() {
       <nav className="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
         <div className="container">
           <button
-            className="navbar-toggler collapsed"
+            className={btnToggle}
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarDefault"
             aria-controls="navbarDefault"
-            aria-expanded="false"
+            aria-expanded={ariaExp ? false : true}
             aria-label="Toggle navigation"
+            onClick={toggle}
           >
             <span></span>
             <span></span>
@@ -26,13 +45,10 @@ export default function Header() {
             Estate<span className="color-b">Agency</span>
           </Link>
 
-          <div
-            className="navbar-collapse collapse justify-content-center"
-            id="navbarDefault"
-          >
+          <div className={btnCollapse} id="navbarDefault">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">
+                <Link className="nav-link" to="/">
                   Home
                 </Link>
               </li>
